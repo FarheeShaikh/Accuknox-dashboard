@@ -2,9 +2,11 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Category from './components/Category';
 import { setSearchQuery } from './redux/dashboardSlice';
+import Dashboard from './components/Dashboard';
 
 function App() {
-  const categories = useSelector(state => state.dashboard.categories);
+  return <Dashboard />;
+  const dashboard = useSelector(state => state.dashboard);
   const dispatch = useDispatch();
 
   return (
@@ -16,8 +18,10 @@ function App() {
         className="border p-2 mb-6 w-full rounded shadow-sm"
         onChange={e => dispatch(setSearchQuery(e.target.value))}
       />
-      {Object.keys(categories).map(category => (
-        <Category key={category} title={category} widgets={categories[category]} />
+      {Object.keys(dashboard)
+      .filter(key => key !== 'searchQuery')
+      .map(category => (
+        <Category key={category} title={category} widgets={dashboard[category]} />
       ))}
     </div>
   );

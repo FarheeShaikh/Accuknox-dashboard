@@ -1,13 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  categories: {
-    "CSPM Executive Dashboard": [
-      { id: 1, name: "Widget A", text: "Random content A" },
-      { id: 2, name: "Widget B", text: "Random content B" }
-    ],
-    "Analytics Dashboard": []
-  },
+  CPSM:[],
+  CWPP:[],
+  IMG:[],
+  Ticket:[],
   searchQuery: ''
 };
 
@@ -19,7 +16,8 @@ const dashboardSlice = createSlice({
   reducers: {
     addWidget: (state, action) => {
       const { category, name, text } = action.payload;
-      state.categories[category].push({ id: idCounter++, name, text });
+      if(!state[category]) state[category]=[];
+      state[category].push({ id: Date.now(), name, text });
     },
     removeWidget: (state, action) => {
       const { category, id } = action.payload;

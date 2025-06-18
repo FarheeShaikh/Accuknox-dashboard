@@ -1,10 +1,15 @@
+
+// Updated React component flow to support drawer with pre-step functionality
+// Key file: Category.js (we'll add drawer logic here)
+
+// Import necessary hooks and components
 import React, { useState } from 'react';
 import Widget from './Widget';
-import AddWidgetModal from './AddWidgetModal';
+import AddWidgetDrawer from './AddWidgetDrawer';
 import { useSelector } from 'react-redux';
 
 const Category = ({ title, widgets }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showDrawer, setShowDrawer] = useState(false);
   const search = useSelector(state => state.dashboard.searchQuery.toLowerCase());
 
   return (
@@ -13,7 +18,7 @@ const Category = ({ title, widgets }) => {
         <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
         <button
           className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
-          onClick={() => setShowModal(true)}
+          onClick={() => setShowDrawer(true)}
         >
           + Add Widget
         </button>
@@ -23,9 +28,15 @@ const Category = ({ title, widgets }) => {
           .filter(w => w.name.toLowerCase().includes(search))
           .map(w => <Widget key={w.id} {...w} category={title} />)}
       </div>
-      {showModal && <AddWidgetModal category={title} onClose={() => setShowModal(false)} />}
+
+      {showDrawer && (
+        <AddWidgetDrawer
+          category={title}
+          onClose={() => setShowDrawer(false)}
+        />
+      )}
     </div>
   );
 };
 
-export default Category;
+export default Category;
